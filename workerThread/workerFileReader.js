@@ -1,6 +1,5 @@
 const { workerData, Worker, isMainThread, parentPort } = require('node:worker_threads')
 const fs = require('fs')
-const osUtils = require('node-os-utils')
 
 if (isMainThread) {
   exports.readAsync = function readAsync (filePath) {
@@ -11,9 +10,8 @@ if (isMainThread) {
       })
 
       worker.once('message', async (data) => {
-       const cpuUsage = await osUtils.os.cpu.usage()
 
-        console.log(`File Read with worker thread : ${worker.threadId} => with CPU Core : ${cpuUsage.cpu}`)
+        console.log(`File Read with worker thread : ${worker.threadId}`)
         resolve(data)
       })
 
